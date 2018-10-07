@@ -1,0 +1,30 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Auto servis</title>
+      {% else %}
+      <title>Dobro dosli u auto servis</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>Auto servis:
+            <a href="{{ url_for('index') }}">Pocetak</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Prijava</a>
+            {% else %}
+            <a href="{{ url_for('logout') }}">Odjava</a>
+            {% endif %}
+            <a href="/registracija">Registracija</a> </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
