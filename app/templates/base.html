@@ -8,13 +8,14 @@
     </head>
     <body>
         <div>Auto servis:
-            <a href="{{ url_for('index') }}">Pocetak</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Prijava</a>
+            <a href="{{ url_for('register') }}">Registracija</a> </div>
             {% else %}
+            <a href="{{ url_for('index') }}">Pocetak</a>
             <a href="{{ url_for('logout') }}">Odjava</a>
             {% endif %}
-            <a href="/registracija">Registracija</a> </div>
+
         <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
