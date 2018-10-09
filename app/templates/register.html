@@ -6,49 +6,49 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.ime.label }}<br>
-            {{ form.ime(size=32) }}<br>
+            {{ form.ime }}<br>
             {% for error in form.ime.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.prezime.label }}<br>
-            {{ form.prezime(size=32) }}<br>
+            {{ form.prezime }}<br>
             {% for error in form.prezime.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.adresa_ptt.label }}<br>
-            {{ form.adresa_ptt(size=32) }}<br>
+            {{ form.adresa_ptt }}<br>
             {% for error in form.adresa_ptt.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.adresa_mesto.label }}<br>
-            {{ form.adresa_mesto(size=32) }}<br>
+            {{ form.adresa_mesto }}<br>
             {% for error in form.adresa_mesto.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.adresa_ulica_broj.label }}<br>
-            {{ form.adresa_ulica_broj(size=32) }}<br>
+            {{ form.adresa_ulica_broj }}<br>
             {% for error in form.adresa_ulica_broj.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.korisnik_email.label }}<br>
-            {{ form.korisnik_email(size=64) }}<br>
+            {{ form.korisnik_email }}<br>
             {% for error in form.korisnik_email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.id_korisnik_tip.label }}<br>
-            {{ form.id_korisnik_tip(size=64) }}<br>
+            {{ form.id_korisnik_tip }}<br>
             {% for error in form.id_korisnik_tip.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, SelectField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import Korisnik
 
@@ -16,7 +16,8 @@ class RegistrationForm(FlaskForm):
     adresa_mesto = StringField('Mesto', validators=[DataRequired()])
     adresa_ulica_broj = StringField('Ulica i broj', validators=[DataRequired()])
     korisnik_email = StringField('Email korisnika', validators=[DataRequired()])
-    id_korisnik_tip = StringField('Tip korisnika', validators=[DataRequired()])
+    #id_korisnik_tip = StringField('Tip korisnika', validators=[DataRequired()])
+    id_korisnik_tip = SelectField('Tip korisnika', choices=[('1', 'Vlasnik'),('2', 'Automehanicar')], validators=[DataRequired()])
     korisnik_login = StringField('Korisnicki nalog', validators=[DataRequired()])
     korisnik_pass = PasswordField('Lozinka', validators=[DataRequired()])
     korisnik_pass2 = PasswordField('Ponovi lozinku', validators=[DataRequired(), EqualTo('korisnik_pass')])
