@@ -31,16 +31,28 @@ class Korisnik(UserMixin,db.Model):
     def check_password( self, password ):
         return check_password_hash(self.korisnik_pass, password)
 
+
 class Vozilo(db.Model):
     id_vozilo = db.Column(db.Integer, primary_key=True)
-    broj_motora = db.Column(db.String(10), index=True, unique=True)
     broj_sasije = db.Column(db.String(10), index=True, unique=True)
-    model = db.Column(db.String(25), index=True, unique=True)
+    marka = db.Column(db.String(25), index=True, unique=True)
     tip = db.Column(db.String(25), index=True, unique=True)
-    godina_proizvodnje = db.Column(db.DateTime, index=True, unique=True)
 
     def __repr__( self ):
-        return '<Vozilo {}>'.format(self.cars)
+        return '<Vozilo {}>'.format(self.broj_sasije)
+
+class Servis(db.Model):
+    id_servis = db.Column(db.Integer, primary_key=True)
+    id_vozilo = db.Column(db.Integer, db.ForeignKey('vozilo.id_vozilo'))
+    datum = db.Column(db.String, index=True, unique=True)
+    opis_radova = db.Column(db.String(250), index=True, unique=True)
+    iznos_radova = db.Column(db.Float, index=True, unique=True)
+    id_vlasnik = db.Column(db.Integer, db.ForeignKey('korisnik.id_korisnik'))
+    id_automehanicar = db.Column(db.Integer, db.ForeignKey('korisnik.id_korisnik'))
+
+    def __repr__( self ):
+        return '<Vozilo {}>'.format(self.broj_sasije)
+
 
 @login.user_loader
 def load_user(id_korisnik):

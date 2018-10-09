@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Servis</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.id_vozilo.label }}<br>
+            {{ form.id_vozilo }}<br>
+            {% for error in form.id_vozilo.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.datum.label }}<br>
+            {{ form.datum }}<br>
+            {% for error in form.datum.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.opis_radova.label }}<br>
+            {{ form.opis_radova }}<br>
+            {% for error in form.opis_radova.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.iznos_radova.label }}<br>
+            {{ form.iznos_radova }}<br>
+            {% for error in form.iznos_radova.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.id_vlasnik.label }}<br>
+            {{ form.id_vlasnik }}<br>
+            {% for error in form.id_vlasnik.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.id_automehanicar.label }}<br>
+            {{ form.id_automehanicar }}<br>
+            {% for error in form.id_automehanicar.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

@@ -2,27 +2,15 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm
-from app.models import Korisnik
-from app.forms import RegistrationForm
+from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm
+from app.models import Korisnik,Vozilo,Servis
 
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    user = {'username': 'Miguel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('index.html', title='Home')
 
 
 @app.route('/pristup', methods=['GET', 'POST'])
@@ -48,16 +36,44 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = Korisnik(ime=form.ime.data,prezime=form.prezime.data,adresa_ptt=form.adresa_ptt.data, adresa_mesto=form.adresa_mesto.data, adresa_ulica_broj=form.adresa_ulica_broj.data, korisnik_email=form.korisnik_email.data,id_korisnik_tip=form.id_korisnik_tip.data,  korisnik_login=form.korisnik_login.data,korisnik_pass=form.korisnik_pass.data,)
+        user = Korisnik(ime=form.ime.data,prezime=form.prezime.data,adresa_ptt=form.adresa_ptt.data, adresa_mesto=form.adresa_mesto.data, adresa_ulica_broj=form.adresa_ulica_broj.data, korisnik_email=form.korisnik_email.data,id_korisnik_tip=form.id_korisnik_tip.data,  korisnik_login=form.korisnik_login.data,korisnik_pass=form.korisnik_pass.data)
         user.set_password(form.korisnik_pass.data)
         db.session.add(user)
         db.session.commit()
         flash('Bravo, upravo ste postali registrovani korisnik!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/vozilo', methods=['GET', 'POST'])
+def vozilo():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    form = VoziloForm()
+    if form.validate_on_submit():
+        vozilo = Vozilo(broj_sasije=form.broj_sasije.data,marka=form.marka.data,tip=form.tip.data)
+        db.session.add(vozilo)
+        db.session.commit()
+        flash('Bravo, upravo ste evidentirali vozilo!')
+        return redirect(url_for('index'))
+    return render_template('vozilo.html', title='Vozilo', form=form)
+
+
+@app.route('/servis', methods=['GET', 'POST'])
+def servis():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    form = ServisForm()
+    if form.validate_on_submit():
+        servis = Servis(id_vozilo=form.id_vozilo.data,datum=form.datum.data,opis_radova=form.opis_radova.data, iznos_radova=form.iznos_radova.data, id_vlasnik=form.id_vlasnik.data, id_automehanicar=form.id_automehanicar.data)
+        db.session.add(servis)
+        db.session.commit()
+        flash('Bravo, upravo ste evidentirali uradjeni servis na vozilu!')
+        return redirect(url_for('index'))
+    return render_template('servis.html', title='Servsi', form=form)

@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div><p>Zdravo svima, auto servis je web aplikacija radjena u python/flask razvojnom okruzenju.<br>
-            Namenja je vlasnicima i automehanicarima vozila kako bi imali jedinstven portal za istorijat svih servisnih aktivnosti.</p></div>
-    {% endblock %}
+    <div>
+        <p>Zdravo svima, auto servis je web aplikacija radjena u python/flask razvojnom okruzenju.<br>
+            Namenja je vlasnicima i automehanicarima vozila kako bi imali jedinstven portal za istorijat svih servisnih aktivnosti.
+        </p>
+        <a href="{{ url_for('vozilo') }}">Vozilo</a><br>
+        <a href="{{ url_for('servis') }}">Servis</a><br>
+    </div>
+{%endblock %}

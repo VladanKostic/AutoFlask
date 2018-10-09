@@ -55,21 +55,21 @@
         </p>
         <p>
             {{ form.korisnik_login.label }}<br>
-            {{ form.korisnik_login(size=32) }}<br>
+            {{ form.korisnik_login }}<br>
             {% for error in form.korisnik_login.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.korisnik_pass.label }}<br>
-            {{ form.korisnik_pass(size=32) }}<br>
+            {{ form.korisnik_pass }}<br>
             {% for error in form.korisnik_pass.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.korisnik_pass2.label }}<br>
-            {{ form.korisnik_pass2(size=32) }}<br>
+            {{ form.korisnik_pass2 }}<br>
             {% for error in form.korisnik_pass2.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
