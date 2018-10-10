@@ -46,3 +46,7 @@ class ServisForm(FlaskForm):
     id_vlasnik = StringField('Id vlasnika', validators=[DataRequired()])
     id_automehanicar = StringField('Id automehanicara', validators=[DataRequired()])
     submit = SubmitField('Evidentiraj')
+
+class VoziloServisPretragaForm(FlaskForm):
+    izbor = StringField('Unesi broj sasije vozila', validators=[DataRequired()])
+    submit = SubmitField('Prikazi')

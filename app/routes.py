@@ -2,8 +2,9 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm
+from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm,VoziloServisPretragaForm
 from app.models import Korisnik,Vozilo,Servis
+from app.tables import ResultsVoziloServis
 
 
 @app.route('/')
@@ -77,3 +78,37 @@ def servis():
         flash('Bravo, upravo ste evidentirali uradjeni servis na vozilu!')
         return redirect(url_for('index'))
     return render_template('servis.html', title='Servsi', form=form)
+
+
+@app.route('/voziloservis', methods=['GET', 'POST'])
+def voziloservis():
+    search = VoziloServisPretragaForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
+
+    return render_template('voziloservis.html', title='Servis', form=search)
+
+
+@app.route('/voziloservisrezultat')
+def search_results( search ):
+    results = []
+    search_string = search.data['izbor']
+
+    if search.data['izbor'] != '':
+        results = db.session.execute('select vozilo.broj_sasije,servis.datum,servis.opis_radova,servis.iznos_radova\
+                                     from servis, vozilo\
+                                     where vozilo.broj_sasije = :val\
+                                     and vozilo.id_vozilo = servis.id_vozilo;',{'val':search_string})
+
+    if not results:
+        flash('No results found!')
+        return redirect(url_for('voziloservis'))
+    else:
+        # display results
+        table = ResultsVoziloServis(results)
+        table.border = True
+        return render_template('voziloservisrezultat.html', table=table)
+
+@app.route('/majstorservis')
+def majstorservis():
+    return render_template('majstorservis.html', title='Servsi')
