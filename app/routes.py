@@ -2,9 +2,10 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm,VoziloServisPretragaForm
+from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm
+from app.forms import MajstorServisPretragaForm,VoziloServisPretragaForm
 from app.models import Korisnik,Vozilo,Servis
-from app.tables import ResultsVoziloServis
+from app.tables import ResultsVoziloServis, ResultsMajstorServis
 
 
 @app.route('/')
@@ -80,15 +81,6 @@ def servis():
     return render_template('servis.html', title='Servsi', form=form)
 
 
-@app.route('/voziloservis', methods=['GET', 'POST'])
-def voziloservis():
-    search = VoziloServisPretragaForm(request.form)
-    if request.method == 'POST':
-        return search_results(search)
-
-    return render_template('voziloservis.html', title='Servis', form=search)
-
-
 @app.route('/voziloservisrezultat')
 def search_results( search ):
     results = []
@@ -101,7 +93,7 @@ def search_results( search ):
                                      and vozilo.id_vozilo = servis.id_vozilo;',{'val':search_string})
 
     if not results:
-        flash('No results found!')
+        flash('Nije pronadjen rezultat')
         return redirect(url_for('voziloservis'))
     else:
         # display results
@@ -109,6 +101,41 @@ def search_results( search ):
         table.border = True
         return render_template('voziloservisrezultat.html', table=table)
 
-@app.route('/majstorservis')
+
+@app.route('/voziloservis', methods=['GET', 'POST'])
+def voziloservis():
+    search = VoziloServisPretragaForm(request.form)
+    if request.method == 'POST':
+            return search_results(search)
+
+    return render_template('voziloservis.html', title='Servis', form=search)
+
+
+@app.route('/majstorservis', methods=['GET', 'POST'])
 def majstorservis():
-    return render_template('majstorservis.html', title='Servsi')
+    search1 = MajstorServisPretragaForm(request.form)
+    if request.method == 'POST':
+        return search_majstorservis_results(search1)
+
+    return render_template('majstorservis.html', title='Servis', form=search1)
+
+@app.route('/majstorservisrezultat')
+def search_majstorservis_results( search ):
+    results = []
+    search_string = search.data['izbor_majstor']
+
+    if search.data['izbor_majstor'] != '':
+        results = db.session.execute('select korisnik.ime,korisnik.prezime,vozilo.broj_sasije,servis.datum,servis.opis_radova,servis.iznos_radova\
+                                     from korisnik, servis, vozilo\
+                                     where korisnik.ime = :val\
+                                     and servis.id_automehanicar = korisnik.id_korisnik\
+                                     and servis.id_vozilo = vozilo.id_vozilo;',{'val':search_string})
+
+    if not results:
+        flash('Nije pronadjen rezultat!')
+        return redirect(url_for('majstorservis'))
+    else:
+        # display results
+        table1 = ResultsMajstorServis(results)
+        table1.border = True
+        return render_template('majstorservisrezultat.html', table=table1)

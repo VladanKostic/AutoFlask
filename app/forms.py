@@ -50,3 +50,7 @@ class ServisForm(FlaskForm):
 class VoziloServisPretragaForm(FlaskForm):
     izbor = StringField('Unesi broj sasije vozila', validators=[DataRequired()])
     submit = SubmitField('Prikazi')
+
+class MajstorServisPretragaForm(FlaskForm):
+    izbor_majstor = StringField('Unesi ime automehanicara', validators=[DataRequired()])
+    submit = SubmitField('Prikazi')
