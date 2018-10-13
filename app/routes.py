@@ -142,10 +142,22 @@ def search_majstorservis_results( search ):
 
 @app.route('/graf')
 def graf():
+    results = []
+    labels = []
+    values = []
+
+    results = db.session.execute('select vozilo.broj_sasije,servis.iznos_radova\
+                                  from servis,vozilo\
+                                  where servis.id_vozilo = vozilo.id_vozilo\
+                                  group by vozilo.broj_sasije;')
+
+    for row in results:
+      labels.append(row["broj_sasije"])
+      values.append(row["iznos_radova"])
+
+    """
     labels = [
-        'JAN', 'FEB', 'MAR', 'APR',
-        'MAY', 'JUN', 'JUL', 'AUG',
-        'SEP', 'OCT', 'NOV', 'DEC'
+        'AA', 'BB'
     ]
 
     values = [
@@ -153,12 +165,13 @@ def graf():
         2328.91, 2504.28, 2873.83, 4764.87,
         4349.29, 6458.30, 9907, 16297
     ]
-
+    """
     colors = [
         "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
         "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
         "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
 
+
     line_labels=labels
     line_values=values
-    return render_template('graf.html', title='Troskovnik vozlila', max=17000, labels=line_labels, values=line_values)
+    return render_template('graf.html', title='Troskovnik vozlila', max=45000, labels=line_labels, values=line_values)
