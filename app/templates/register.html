@@ -4,76 +4,90 @@
     <h1>Registracija</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.ime.label }}<br>
-            {{ form.ime }}<br>
-            {% for error in form.ime.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.prezime.label }}<br>
-            {{ form.prezime }}<br>
-            {% for error in form.prezime.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.adresa_ptt.label }}<br>
-            {{ form.adresa_ptt }}<br>
-            {% for error in form.adresa_ptt.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.adresa_mesto.label }}<br>
-            {{ form.adresa_mesto }}<br>
-            {% for error in form.adresa_mesto.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.adresa_ulica_broj.label }}<br>
-            {{ form.adresa_ulica_broj }}<br>
-            {% for error in form.adresa_ulica_broj.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.korisnik_email.label }}<br>
-            {{ form.korisnik_email }}<br>
-            {% for error in form.korisnik_email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.id_korisnik_tip.label }}<br>
-            {{ form.id_korisnik_tip }}<br>
-            {% for error in form.id_korisnik_tip.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.korisnik_login.label }}<br>
-            {{ form.korisnik_login }}<br>
-            {% for error in form.korisnik_login.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.korisnik_pass.label }}<br>
-            {{ form.korisnik_pass }}<br>
-            {% for error in form.korisnik_pass.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.korisnik_pass2.label }}<br>
-            {{ form.korisnik_pass2 }}<br>
-            {% for error in form.korisnik_pass2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+        <table class="reg" >
+            <tr>
+                <td>
+                    {{ form.ime.label }}<br>
+                    {{ form.ime }}<br>
+                    {% for error in form.ime.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ form.prezime.label }}<br>
+                    {{ form.prezime }}<br>
+                    {% for error in form.prezime.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.id_korisnik_tip.label }}<br>
+                    {{ form.id_korisnik_tip }}<br>
+                    {% for error in form.id_korisnik_tip.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.adresa_ptt.label }}<br>
+                    {{ form.adresa_ptt }}<br>
+                    {% for error in form.adresa_ptt.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ form.adresa_mesto.label }}<br>
+                    {{ form.adresa_mesto }}<br>
+                    {% for error in form.adresa_mesto.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ form.adresa_ulica_broj.label }}<br>
+                    {{ form.adresa_ulica_broj }}<br>
+                    {% for error in form.adresa_ulica_broj.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.korisnik_email.label }}<br>
+                    {{ form.korisnik_email }}<br>
+                    {% for error in form.korisnik_email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.korisnik_login.label }}<br>
+                    {{ form.korisnik_login }}<br>
+                    {% for error in form.korisnik_login.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.korisnik_pass.label }}<br>
+                    {{ form.korisnik_pass }}<br>
+                    {% for error in form.korisnik_pass.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ form.korisnik_pass2.label }}<br>
+                    {{ form.korisnik_pass2 }}<br>
+                    {% for error in form.korisnik_pass2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}

@@ -5,11 +5,11 @@
         <p>Zdravo svima, auto servis je web aplikacija radjena u python/flask razvojnom okruzenju.<br>
             Namenja je vlasnicima i automehanicarima vozila kako bi imali jedinstven portal za istorijat svih servisnih aktivnosti.
         </p>
-        <a href="{{ url_for('vozilo') }}">Vozilo</a> , <a href="{{ url_for('vozilapregled') }}">Pregled vozila</a><br>
-        <a href="{{ url_for('servis') }}">Servis</a><br>
-        <a href="{{ url_for('vlasnistvo') }}">Vlasnistvo</a><br>
+        <a href="{{ url_for('vozilo') }}">Vozilo</a> , <a href="{{ url_for('vozilapregled') }}">Pregled vozila</a><br><br>
+        <a href="{{ url_for('servis') }}">Servis</a><br><br>
+        <a href="{{ url_for('vlasnistvo') }}">Vlasnistvo</a><br><br>
         <a href="{{ url_for('voziloservis') }}">Vozilo servis</a><br>
-        <a href="{{ url_for('majstorservis') }}">Majstor servis</a><br>
+        <a href="{{ url_for('majstorservis') }}">Majstor servis</a><br><br>
         <a href="{{ url_for('graf') }}">Graf troskovnika vozila</a><br>
     </div>
 {%endblock %}
