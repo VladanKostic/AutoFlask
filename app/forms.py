@@ -1,7 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import Korisnik
+from app.models import Korisnik,ChoiceVozilo
+from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy.fields import QuerySelectField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 class LoginForm(FlaskForm):
     username = StringField('Korisnik', validators=[DataRequired()])
@@ -46,6 +49,18 @@ class ServisForm(FlaskForm):
     id_vlasnik = StringField('Id vlasnika', validators=[DataRequired()])
     id_automehanicar = StringField('Id automehanicara', validators=[DataRequired()])
     submit = SubmitField('Evidentiraj')
+
+class VlasnistvoForm(FlaskForm):
+    id_vozilo = StringField('Broj sasije:', validators=[DataRequired()])
+    #id_vozilo = QuerySelectField(query_factory=ChoiceVozilo.choice_query, allow_blank=True)
+    datum_od = StringField('Od datuma:', validators=[DataRequired()])
+    datum_do = StringField('Do datuma:', validators=[DataRequired()])
+    id_vlasnik = StringField('Id vlasnika:', validators=[DataRequired()])
+    submit = SubmitField('Evidentiraj')
+
+class VozilaPregledForm(FlaskForm):
+    izbor_brsas = StringField('Unesi broj sasije vozila:', validators=[DataRequired()])
+    submit = SubmitField('Prikazi')
 
 class VoziloServisPretragaForm(FlaskForm):
     izbor = StringField('Unesi broj sasije vozila:', validators=[DataRequired()])

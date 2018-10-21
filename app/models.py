@@ -41,6 +41,7 @@ class Vozilo(db.Model):
     def __repr__( self ):
         return '<Vozilo {}>'.format(self.broj_sasije)
 
+
 class Servis(db.Model):
     id_servis = db.Column(db.Integer, primary_key=True)
     id_vozilo = db.Column(db.Integer, db.ForeignKey('vozilo.id_vozilo'))
@@ -52,6 +53,20 @@ class Servis(db.Model):
 
     def __repr__( self ):
         return '<Vozilo {}>'.format(self.broj_sasije)
+
+
+class Vlasnistvo(db.Model):
+    id_vozilo = db.Column(db.Integer, primary_key=True, index=True, unique=True)
+    datum_od = db.Column(db.String, primary_key=True, index=True, unique=True)
+    datum_do = db.Column(db.String, index=True, unique=True)
+    id_vlasnik = db.Column(db.Integer, index=True, unique=True)
+
+class ChoiceVozilo(db.Model):
+    id_vozilo = db.Column(db.Integer, primary_key=True)
+    broj_sasije = db.Column(db.String(10))
+
+    def choice_query(self):
+        return ChoiceVozilo.choice_query(self)
 
 
 @login.user_loader

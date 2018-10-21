@@ -15,3 +15,9 @@ class ResultsMajstorServis(Table):
     opis_radova = Col('Opis radova:')
     iznos_radova = Col('Iznos radova:')
 
+class ResultVozila(Table):
+    id_vozilo = Col('ID evidentiranog vozila:', show = True)
+    broj_sasije = Col('Broj sasije:', show = True)
+    marka = Col('Marka', show = True)
+    tip = Col('Tip', show = True)
+

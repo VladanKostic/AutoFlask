@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <p>Na ovoj web strani mozete videti spisak svih evidentiranih vozila na osnovu pretrage po broju sasije:</p>
+    </div>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.izbor_brsas.label }}<br>
+            {{ form.izbor_brsas }}<br>
+            {% for error in form.izbor_brsas.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{%endblock %}

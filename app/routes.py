@@ -2,10 +2,10 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm
-from app.forms import MajstorServisPretragaForm,VoziloServisPretragaForm
-from app.models import Korisnik,Vozilo,Servis
-from app.tables import ResultsVoziloServis, ResultsMajstorServis
+from app.forms import LoginForm,RegistrationForm,VoziloForm,ServisForm,VlasnistvoForm,ChoiceVozilo
+from app.forms import MajstorServisPretragaForm,VoziloServisPretragaForm, VozilaPregledForm
+from app.models import Korisnik,Vozilo,Servis,Vlasnistvo
+from app.tables import ResultsVoziloServis, ResultsMajstorServis, ResultVozila
 
 
 @app.route('/')
@@ -53,10 +53,13 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+
 @app.route('/vozilo', methods=['GET', 'POST'])
 def vozilo():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
+    results = []
+
     form = VoziloForm()
     if form.validate_on_submit():
         vozilo = Vozilo(broj_sasije=form.broj_sasije.data,marka=form.marka.data,tip=form.tip.data)
@@ -66,6 +69,33 @@ def vozilo():
         return redirect(url_for('index'))
     return render_template('vozilo.html', title='Vozilo', form=form)
 
+@app.route('/vozilapregled',methods=['GET','POST'])
+def vozilapregled():
+    search = VozilaPregledForm(request.form)
+    if request.method == 'POST':
+        return search_results_vozila(search)
+
+    return render_template('vozilapregled.html', title='Vozila', form=search)
+
+@app.route('/vozilapregledrezultat',methods=['GET','POST'])
+def search_results_vozila(search):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    results = []
+
+    #search_string = search.data['izbor_brsas']
+    #results = db.session.execute("select id_vozilo, broj_sasije, marka, tip from vozilo where broj_sasije like ':val%';",{'val':search_string})
+
+    trazim = '%{0}%'.format(search.data['izbor_brsas'])
+    results = Vozilo.query.filter(Vozilo.broj_sasije.like(trazim))
+
+    if not results:
+        flash('Nije pronadjen rezultat')
+        return redirect(url_for('vozilapregled'))
+    else:
+        table = ResultVozila(results)
+        table.border = True
+        return render_template('vozilapregledrezultat.html', table=table)
 
 @app.route('/servis', methods=['GET', 'POST'])
 def servis():
@@ -80,6 +110,19 @@ def servis():
         return redirect(url_for('index'))
     return render_template('servis.html', title='Servsi', form=form)
 
+
+@app.route('/vlasnistvo', methods=['GET', 'POST'])
+def vlasnistvo():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    form = VlasnistvoForm()
+    if form.validate_on_submit():
+        vlasnistvo = Vlasnistvo(id_vozilo=form.id_vozilo.data,datum_od=form.datum_od.data,datum_do=form.datum_do.data,id_vlasnik=form.id_vlasnik.data)
+        db.session.add(vlasnistvo)
+        db.session.commit()
+        flash('Bravo, upravo ste evidentirali vlasnistvo nad vozilom!')
+        return redirect(url_for('index'))
+    return render_template('vlasnistvo.html', title='vlasnistvo', form=form)
 
 @app.route('/voziloservisrezultat')
 def search_results( search ):

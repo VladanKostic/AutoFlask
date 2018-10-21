@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Vlasnistvo</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.id_vozilo.label }}<br>
+            {{ form.id_vozilo }}<br>
+            {% for error in form.id_vozilo.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.datum_od.label }}<br>
+            {{ form.datum_od }}<br>
+            {% for error in form.datum_od.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.datum_do.label }}<br>
+            {{ form.datum_do }}<br>
+            {% for error in form.datum_do.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.id_vlasnik.label }}<br>
+            {{ form.id_vlasnik }}<br>
+            {% for error in form.id_vlasnik.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
