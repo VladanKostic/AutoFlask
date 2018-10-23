@@ -7,16 +7,23 @@ from app.forms import MajstorServisPretragaForm,VoziloServisPretragaForm, Vozila
 from app.models import Korisnik,Vozilo,Servis,Vlasnistvo
 from app.tables import ResultsVoziloServis, ResultsMajstorServis, ResultVozila
 
+# === Routes for AutoFlask application ===
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
+    """
+        Ovo je  View funkcija za potrebe realizacije aplikativne rute /index.
+        """
     return render_template('index.html', title='Home')
 
 
 @app.route('/pristup', methods=['GET', 'POST'])
 def login():
+    """
+    Ovo je  View funkcija za potrebe realizacije aplikativne rute /index.
+    """
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
